@@ -1,2 +1,2 @@
 MIT License — Loop Language VS Code Extension
-Copyright (c) 2025 Loop Language Contributors
+Copyright (c) 2026 Loop Language Contributors
