@@ -1,0 +1,544 @@
+{
+  "Fungsi": {
+    "prefix": "fungsi",
+    "body": ["fungsi ${1:nama}(${2:params}) {", "\t$0", "\tkembalikan ${3:nilai}", "}"],
+    "description": "Deklarasi fungsi"
+  },
+  "Jika / Selain": {
+    "prefix": "jika",
+    "body": ["jika ${1:kondisi} {", "\t$0", "} selain {", "\t", "}"],
+    "description": "Blok if/else"
+  },
+  "Jika tanpa selain": {
+    "prefix": "jikasaja",
+    "body": ["jika ${1:kondisi} {", "\t$0", "}"],
+    "description": "Blok if tanpa else"
+  },
+  "Selama": {
+    "prefix": "selama",
+    "body": ["selama ${1:kondisi} {", "\t$0", "}"],
+    "description": "Loop while"
+  },
+  "Untuk setiap": {
+    "prefix": "untuk",
+    "body": ["untuk setiap ${1:item} di ${2:larik} {", "\t$0", "}"],
+    "description": "Loop for-each"
+  },
+  "Pilih / Kasus": {
+    "prefix": "pilih",
+    "body": [
+      "pilih ${1:ekspresi} {",
+      "\tkasus ${2:nilai1} -> ${3:cetak \"kasus 1\"}",
+      "\tkasus ${4:nilai2} -> ${5:cetak \"kasus 2\"}",
+      "\tselain -> ${6:cetak \"lainnya\"}",
+      "}"
+    ],
+    "description": "Switch case"
+  },
+  "Coba / Tangkap": {
+    "prefix": "coba",
+    "body": ["coba {", "\t$0", "} tangkap {", "\tcetak \"terjadi error\"", "}"],
+    "description": "Try/catch"
+  },
+  "Milik": {
+    "prefix": "milik",
+    "body": ["milik ${1:nama} = ${2:nilai}"],
+    "description": "Deklarasi variabel lokal"
+  },
+
+  "-- TIPE --": { "prefix": "___tipe", "body": [""], "description": "" },
+  "Variabel angka": {
+    "prefix": "angka",
+    "body": ["angka ${1:nama} = ${2:0}"],
+    "description": "Variabel bertipe angka"
+  },
+  "Variabel teks": {
+    "prefix": "teks",
+    "body": ["teks ${1:nama} = \"${2:isi}\""],
+    "description": "Variabel bertipe teks"
+  },
+  "Variabel larik": {
+    "prefix": "larik",
+    "body": ["larik ${1:nama} = [${2}]"],
+    "description": "Variabel bertipe larik"
+  },
+
+  "-- CRYPTO --": { "prefix": "___crypto", "body": [""], "description": "" },
+  "sha256": {
+    "prefix": "sha256",
+    "body": ["milik ${1:hash} = sha256(${2:teks_masukan})"],
+    "description": "Hash SHA-256"
+  },
+  "sha1": {
+    "prefix": "sha1",
+    "body": ["milik ${1:hash} = sha1(${2:teks_masukan})"],
+    "description": "Hash SHA-1"
+  },
+  "hmacSha256": {
+    "prefix": "hmac",
+    "body": ["milik ${1:mac} = hmacSha256(${2:kunci}, ${3:pesan})"],
+    "description": "HMAC-SHA256"
+  },
+  "buatKunci": {
+    "prefix": "buatKunci",
+    "body": ["milik ${1:kunci} = buatKunci(${2:1021})"],
+    "description": "Buat kunci kriptografi dari prima"
+  },
+  "enkripsi": {
+    "prefix": "enkripsi",
+    "body": ["milik ${1:cipher} = enkripsi(${2:teks}, ${3:kunci})"],
+    "description": "Enkripsi teks dengan kunci"
+  },
+  "dekripsi": {
+    "prefix": "dekripsi",
+    "body": ["milik ${1:plain} = dekripsi(${2:cipher}, ${3:kunci})"],
+    "description": "Dekripsi teks"
+  },
+  "base64Enkode": {
+    "prefix": "b64e",
+    "body": ["milik ${1:hasil} = base64Enkode(${2:teks})"],
+    "description": "Encode Base64"
+  },
+  "base64Dekode": {
+    "prefix": "b64d",
+    "body": ["milik ${1:hasil} = base64Dekode(${2:b64})"],
+    "description": "Decode Base64"
+  },
+  "caesarEnkode": {
+    "prefix": "caesar",
+    "body": ["milik ${1:hasil} = caesarEnkode(${2:teks}, ${3:geser})"],
+    "description": "Caesar cipher"
+  },
+  "vigenereEnkode": {
+    "prefix": "vigenere",
+    "body": ["milik ${1:hasil} = vigenereEnkode(${2:teks}, ${3:kunci})"],
+    "description": "Vigenere cipher"
+  },
+  "buatToken": {
+    "prefix": "buatToken",
+    "body": ["milik ${1:token} = buatToken(${2:seed}, ${3:32})"],
+    "description": "Buat token acak"
+  },
+  "hashPassword": {
+    "prefix": "hashPassword",
+    "body": [
+      "milik ${1:salt} = buatSalt(acakBulat(1, 99999), 16)",
+      "milik ${1:hash} = hashPassword(${2:password}, ${1:salt})"
+    ],
+    "description": "Hash password dengan salt"
+  },
+  "verifikasiPassword": {
+    "prefix": "verifikasiPassword",
+    "body": ["jika verifikasiPassword(${1:password}, ${2:salt}, ${3:hashTersimpan}) {", "\t$0", "}"],
+    "description": "Verifikasi password"
+  },
+
+  "-- NET --": { "prefix": "___net", "body": [""], "description": "" },
+  "httpGet": {
+    "prefix": "httpGet",
+    "body": ["milik ${1:isi} = httpGet(${2:url})"],
+    "description": "HTTP GET request"
+  },
+  "httpPost": {
+    "prefix": "httpPost",
+    "body": ["milik ${1:resp} = httpPost(${2:url}, ${3:body}, ${4:contentType})"],
+    "description": "HTTP POST request"
+  },
+  "httpPostJSON": {
+    "prefix": "httpJSON",
+    "body": ["milik ${1:resp} = httpPostJSON(${2:url}, jsonStringify(${3:data}))"],
+    "description": "HTTP POST JSON"
+  },
+  "httpGetFull": {
+    "prefix": "httpFull",
+    "body": [
+      "milik ${1:resp} = httpGetFull(${2:url})",
+      "jika resOK(${1:resp}) {",
+      "\tmilik ${3:body} = resBody(${1:resp})",
+      "\t$0",
+      "}"
+    ],
+    "description": "HTTP GET dengan response object"
+  },
+  "httpUnduh": {
+    "prefix": "httpUnduh",
+    "body": ["httpUnduh(${1:url}, ${2:pathTujuan})"],
+    "description": "Download file via HTTP"
+  },
+  "tcpKonek": {
+    "prefix": "tcpKonek",
+    "body": [
+      "milik ${1:fd} = tcpKonek(${2:host}, ${3:port})",
+      "tcpKirim(${1:fd}, ${4:data})",
+      "milik ${5:resp} = tcpTerimaSemuanya(${1:fd})",
+      "tcpTutup(${1:fd})"
+    ],
+    "description": "Koneksi TCP"
+  },
+  "parseURL": {
+    "prefix": "parseURL",
+    "body": ["milik ${1:bagian} = parseURL(${2:url})", "// [skema, host, port, path, query]"],
+    "description": "Parse URL"
+  },
+  "urlEnkode": {
+    "prefix": "urlEnkode",
+    "body": ["milik ${1:encoded} = urlEnkode(${2:teks})"],
+    "description": "URL encode"
+  },
+  "headerBearer": {
+    "prefix": "bearer",
+    "body": ["milik ${1:h} = headerBearer(${2:token})"],
+    "description": "Header Authorization Bearer"
+  },
+  "crawlURL": {
+    "prefix": "crawl",
+    "body": ["milik ${1:hasil} = crawlURL(${2:urlMulai}, ${3:100})"],
+    "description": "Web crawler BFS"
+  },
+  "scrapTag": {
+    "prefix": "scrap",
+    "body": ["milik ${1:hasil} = scrapTag(${2:html}, \"${3:div}\", \"${4:class}\")"],
+    "description": "Scrape HTML tag"
+  },
+
+  "-- OS --": { "prefix": "___os", "body": [""], "description": "" },
+  "getEnv": {
+    "prefix": "getEnv",
+    "body": ["milik ${1:val} = getEnvAtau(\"${2:NAMA}\", \"${3:default}\")"],
+    "description": "Baca environment variable"
+  },
+  "argumen": {
+    "prefix": "argumen",
+    "body": ["milik ${1:args} = argumen()", "milik ${2:arg1} = argN(1)"],
+    "description": "Baca argumen CLI"
+  },
+  "parseArg": {
+    "prefix": "parseArg",
+    "body": ["milik ${1:val} = parseArg(\"--${2:flag}\")"],
+    "description": "Parse flag argumen --nama"
+  },
+  "jalankanPerintah": {
+    "prefix": "shell",
+    "body": ["milik ${1:hasil} = jalankanPerintah(\"${2:cmd}\")", "// hasil.kode, hasil.stdout, hasil.stderr"],
+    "description": "Jalankan perintah shell"
+  },
+  "dirKerja": {
+    "prefix": "dirKerja",
+    "body": ["milik ${1:cwd} = dirKerja()"],
+    "description": "Direktori kerja saat ini"
+  },
+  "namaOS": {
+    "prefix": "namaOS",
+    "body": ["milik ${1:os} = namaOS()  // \"linux\", \"darwin\", \"windows\""],
+    "description": "Nama OS saat ini"
+  },
+
+  "-- FORMAT --": { "prefix": "___format", "body": [""], "description": "" },
+  "warna": {
+    "prefix": "warna",
+    "body": ["cetak(warna(${1:teks}, WARNA.${2|hijau,merah,kuning,biru,cyan,putih|}))\n"],
+    "description": "Teks berwarna ANSI"
+  },
+  "tebal": {
+    "prefix": "tebal",
+    "body": ["cetak(tebal(${1:teks}))"],
+    "description": "Teks tebal"
+  },
+  "tabel": {
+    "prefix": "tabel",
+    "body": [
+      "milik ${1:header} = [\"${2:Kolom1}\", \"${3:Kolom2}\"]",
+      "milik ${4:baris}  = [[\"${5:a}\", \"${6:b}\"]]",
+      "cetak(tabel(${1:header}, ${4:baris}))"
+    ],
+    "description": "Render tabel ASCII"
+  },
+  "progressBar": {
+    "prefix": "progressBar",
+    "body": ["cetak(progressBar(${1:pct}, ${2:40}))  // pct: 0.0–1.0"],
+    "description": "Progress bar CLI"
+  },
+  "box": {
+    "prefix": "box",
+    "body": ["cetak(box(${1:teks}))"],
+    "description": "Box di sekitar teks"
+  },
+  "formatByte": {
+    "prefix": "formatByte",
+    "body": ["milik ${1:s} = formatByte(${2:bytes})"],
+    "description": "Format byte ke KB/MB/GB"
+  },
+  "spinnerFrame": {
+    "prefix": "spinner",
+    "body": ["selama ${1:proses} {", "\ttulisInplace(spinnerFrame() + \" ${2:Memproses...}\")", "\ttidur(80)", "}"],
+    "description": "Spinner animasi CLI"
+  },
+
+  "-- LOG --": { "prefix": "___log", "body": [""], "description": "" },
+  "logInfo": {
+    "prefix": "logInfo",
+    "body": ["logInfo(\"${1:pesan}\", { ${2:key}: ${3:val} })"],
+    "description": "Log level INFO"
+  },
+  "logWarn": {
+    "prefix": "logWarn",
+    "body": ["logWarn(\"${1:pesan}\", { ${2:key}: ${3:val} })"],
+    "description": "Log level WARN"
+  },
+  "logError": {
+    "prefix": "logError",
+    "body": ["logError(\"${1:pesan}\", { ${2:key}: ${3:val} })"],
+    "description": "Log level ERROR"
+  },
+  "logDebug": {
+    "prefix": "logDebug",
+    "body": ["logDebug(\"${1:pesan}\", { ${2:key}: ${3:val} })"],
+    "description": "Log level DEBUG"
+  },
+  "logSetup": {
+    "prefix": "logSetup",
+    "body": [
+      "setLevelLog(\"${1|DEBUG,INFO,WARN,ERROR|}\")",
+      "setLogFile(\"${2:app.log}\")",
+      "logSetPrefix(\"[${3:Modul}]\")"
+    ],
+    "description": "Konfigurasi logger"
+  },
+  "logWaktu": {
+    "prefix": "logWaktu",
+    "body": ["milik ${1:hasil} = logWaktu(\"${2:label}\", fungsi() { kembalikan ${3:fn()} })"],
+    "description": "Log dengan timer eksekusi"
+  },
+  "logGrup": {
+    "prefix": "logGrup",
+    "body": ["logGrup(\"${1:judul}\", fungsi() {", "\t$0", "})"],
+    "description": "Log grup dengan indent"
+  },
+
+  "-- JSON --": { "prefix": "___json", "body": [""], "description": "" },
+  "jsonParse": {
+    "prefix": "jsonParse",
+    "body": ["milik ${1:obj} = jsonParse(${2:jsonString})"],
+    "description": "Parse JSON string → objek"
+  },
+  "jsonStringify": {
+    "prefix": "jsonStringify",
+    "body": ["milik ${1:s} = jsonStringify(${2:obj})"],
+    "description": "Objek → JSON string"
+  },
+  "jsonPretty": {
+    "prefix": "jsonPretty",
+    "body": ["cetak(jsonPretty(${1:obj}))"],
+    "description": "Pretty print JSON"
+  },
+  "jsonAmbilNested": {
+    "prefix": "jsonNested",
+    "body": ["milik ${1:val} = jsonAmbilNested(${2:obj}, \"${3:user.alamat.kota}\")"],
+    "description": "Akses nested JSON via dot-path"
+  },
+  "jsonMerge": {
+    "prefix": "jsonMerge",
+    "body": ["milik ${1:hasil} = jsonMerge(${2:a}, ${3:b})"],
+    "description": "Merge dua objek JSON"
+  },
+
+  "-- STRUKTUR --": { "prefix": "___struktur", "body": [""], "description": "" },
+  "tumpukBuat": {
+    "prefix": "tumpuk",
+    "body": [
+      "milik ${1:s} = tumpukBuat()",
+      "tumpukDorong(${1:s}, ${2:nilai})",
+      "milik ${3:x} = tumpukAmbil(${1:s})"
+    ],
+    "description": "Stack (LIFO)"
+  },
+  "antrianBuat": {
+    "prefix": "antrian",
+    "body": [
+      "milik ${1:q} = antrianBuat()",
+      "antrianMasuk(${1:q}, ${2:nilai})",
+      "milik ${3:x} = antrianKeluar(${1:q})"
+    ],
+    "description": "Queue (FIFO)"
+  },
+  "setBuat": {
+    "prefix": "setBuat",
+    "body": [
+      "milik ${1:s} = setBuat()",
+      "setTambah(${1:s}, ${2:nilai})",
+      "jika setAda(${1:s}, ${3:cari}) { $0 }"
+    ],
+    "description": "Set (koleksi unik)"
+  },
+  "mapBuat": {
+    "prefix": "mapBuat",
+    "body": [
+      "milik ${1:m} = mapBuat()",
+      "mapSet(${1:m}, ${2:kunci}, ${3:nilai})",
+      "milik ${4:x} = mapAmbil(${1:m}, ${2:kunci})"
+    ],
+    "description": "Map (key-value terurut)"
+  },
+
+  "-- LARIK --": { "prefix": "___larik", "body": [""], "description": "" },
+  "rentang": {
+    "prefix": "rentang",
+    "body": ["milik ${1:arr} = rentang(${2:0}, ${3:10})"],
+    "description": "Larik [0..9]"
+  },
+  "urutNaik": {
+    "prefix": "urutNaik",
+    "body": ["milik ${1:sorted} = urutNaik(${2:arr})"],
+    "description": "Urutkan larik ascending"
+  },
+  "unik": {
+    "prefix": "unik",
+    "body": ["milik ${1:arr} = unik(${2:larik})"],
+    "description": "Hapus duplikat dari larik"
+  },
+  "zip": {
+    "prefix": "zip",
+    "body": ["milik ${1:pairs} = zip(${2:a}, ${3:b})"],
+    "description": "Zip dua larik"
+  },
+  "pecah": {
+    "prefix": "pecah",
+    "body": ["milik ${1:chunks} = pecah(${2:arr}, ${3:ukuran})"],
+    "description": "Pecah larik jadi chunk"
+  },
+
+  "-- MATIKA --": { "prefix": "___matika", "body": [""], "description": "" },
+  "pangkat": {
+    "prefix": "pangkat",
+    "body": ["milik ${1:hasil} = pangkat(${2:basis}, ${3:eksponen})"],
+    "description": "Perpangkatan"
+  },
+  "akarKuadrat": {
+    "prefix": "akar",
+    "body": ["milik ${1:hasil} = akarKuadrat(${2:x})"],
+    "description": "Akar kuadrat"
+  },
+  "faktorial": {
+    "prefix": "faktorial",
+    "body": ["milik ${1:hasil} = faktorial(${2:n})"],
+    "description": "n!"
+  },
+  "fibonacci": {
+    "prefix": "fibonacci",
+    "body": ["milik ${1:f} = fibonacci(${2:n})"],
+    "description": "Fibonacci ke-n"
+  },
+  "rerata": {
+    "prefix": "rerata",
+    "body": ["milik ${1:avg} = rerata(${2:arr})"],
+    "description": "Rata-rata larik"
+  },
+  "stdDeviasi": {
+    "prefix": "stdDeviasi",
+    "body": ["milik ${1:sd} = stdDeviasi(${2:arr})"],
+    "description": "Standar deviasi"
+  },
+
+  "-- ACAK --": { "prefix": "___acak", "body": [""], "description": "" },
+  "acakBulat": {
+    "prefix": "acakBulat",
+    "body": ["milik ${1:n} = acakBulat(${2:1}, ${3:100})"],
+    "description": "Bilangan bulat acak [min..maks]"
+  },
+  "acakPilih": {
+    "prefix": "acakPilih",
+    "body": ["milik ${1:item} = acakPilih(${2:larik})"],
+    "description": "Pilih acak dari larik"
+  },
+  "acakKocok": {
+    "prefix": "acakKocok",
+    "body": ["milik ${1:arr} = acakKocokSalin(${2:larik})"],
+    "description": "Kocok larik (Fisher-Yates)"
+  },
+  "acakNormal": {
+    "prefix": "acakNormal",
+    "body": ["milik ${1:x} = acakNormal(${2:0}, ${3:1})"],
+    "description": "Distribusi normal (Gaussian)"
+  },
+  "acakUUID": {
+    "prefix": "uuid",
+    "body": ["milik ${1:id} = acakUUID()"],
+    "description": "UUID acak v4"
+  },
+  "acakSeed": {
+    "prefix": "acakSeed",
+    "body": ["acakSeed(${1:12345})  // seed deterministik"],
+    "description": "Set seed deterministik"
+  },
+
+  "-- WAKTU --": { "prefix": "___waktu", "body": [""], "description": "" },
+  "ukurWaktu": {
+    "prefix": "ukurWaktu",
+    "body": [
+      "milik ${1:mulai} = ukurMulai()",
+      "$0",
+      "milik ${2:durasi} = ukurSelesai(${1:mulai})",
+      "cetak(\"Durasi: \" + formatDetik(${2:durasi}))"
+    ],
+    "description": "Ukur durasi eksekusi"
+  },
+  "formatDetik": {
+    "prefix": "formatDetik",
+    "body": ["cetak(formatDetik(${1:totalDetik}))  // HH:MM:SS"],
+    "description": "Format detik ke HH:MM:SS"
+  },
+
+  "-- BERKAS --": { "prefix": "___berkas", "body": [""], "description": "" },
+  "bacaTeks": {
+    "prefix": "bacaTeks",
+    "body": ["milik ${1:isi} = bacaTeks(\"${2:path/file.txt}\")"],
+    "description": "Baca file sebagai teks"
+  },
+  "bacaBaris": {
+    "prefix": "bacaBaris",
+    "body": ["milik ${1:baris} = bacaBaris(\"${2:path/file.txt}\")"],
+    "description": "Baca file sebagai larik baris"
+  },
+  "bacaCSV": {
+    "prefix": "bacaCSV",
+    "body": ["milik ${1:tabel} = bacaCSV(\"${2:data.csv}\", \",\")"],
+    "description": "Baca file CSV"
+  },
+  "tulisTeks": {
+    "prefix": "tulisTeks",
+    "body": ["tulisTeks(\"${1:path/output.txt}\", ${2:isi})"],
+    "description": "Tulis teks ke file"
+  },
+  "tulisCSV": {
+    "prefix": "tulisCSV",
+    "body": ["tulisCSV(\"${1:output.csv}\", ${2:tabel}, \",\")"],
+    "description": "Tulis tabel ke CSV"
+  },
+
+  "-- IO --": { "prefix": "___io", "body": [""], "description": "" },
+  "cetak": {
+    "prefix": "cetak",
+    "body": ["cetak(${1:ekspresi})"],
+    "description": "Print ke stdout (dengan baris baru)"
+  },
+  "cetakTanpaBaris": {
+    "prefix": "cetakInline",
+    "body": ["cetakTanpaBaris(${1:ekspresi})"],
+    "description": "Print ke stdout tanpa baris baru"
+  },
+  "tanya": {
+    "prefix": "tanya",
+    "body": ["milik ${1:jawab} = tanya(\"${2:Prompt: }\")"],
+    "description": "Minta input dari user"
+  },
+  "tanyaAngka": {
+    "prefix": "tanyaAngka",
+    "body": ["milik ${1:n} = tanyaAngka(\"${2:Masukkan angka: }\")"],
+    "description": "Input angka dari user"
+  },
+  "debug": {
+    "prefix": "debug",
+    "body": ["debug(\"${1:nama}\", ${2:nilai})"],
+    "description": "Debug ke stderr"
+  }
+}

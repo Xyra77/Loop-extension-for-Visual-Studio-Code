@@ -1,0 +1,252 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Loop",
+  "scopeName": "source.loop",
+  "fileTypes": ["lp"],
+  "patterns": [
+    { "include": "#komentar" },
+    { "include": "#string" },
+    { "include": "#boolean" },
+    { "include": "#nihil" },
+    { "include": "#angka" },
+    { "include": "#kata-kunci-kontrol" },
+    { "include": "#kata-kunci-deklarasi" },
+    { "include": "#kata-kunci-tipe" },
+    { "include": "#builtin-fungsi" },
+    { "include": "#lib-crypto" },
+    { "include": "#lib-net" },
+    { "include": "#lib-os" },
+    { "include": "#lib-format" },
+    { "include": "#lib-log" },
+    { "include": "#lib-json" },
+    { "include": "#lib-struktur" },
+    { "include": "#lib-larik" },
+    { "include": "#lib-teksutil" },
+    { "include": "#lib-matika" },
+    { "include": "#lib-acak" },
+    { "include": "#lib-waktu" },
+    { "include": "#lib-berkas" },
+    { "include": "#lib-pinout" },
+    { "include": "#fungsi-deklarasi" },
+    { "include": "#fungsi-panggil" },
+    { "include": "#operator" },
+    { "include": "#variabel" }
+  ],
+  "repository": {
+    "komentar": {
+      "patterns": [
+        {
+          "name": "comment.block.loop",
+          "begin": "/\\*",
+          "end": "\\*/",
+          "beginCaptures": { "0": { "name": "punctuation.definition.comment.begin.loop" } },
+          "endCaptures": { "0": { "name": "punctuation.definition.comment.end.loop" } }
+        },
+        {
+          "name": "comment.line.double-slash.loop",
+          "match": "//[^\\n]*"
+        }
+      ]
+    },
+    "string": {
+      "name": "string.quoted.double.loop",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "meta.interpolation.loop",
+          "begin": "#\\{",
+          "end": "\\}",
+          "beginCaptures": { "0": { "name": "punctuation.definition.template-expression.begin.loop" } },
+          "endCaptures": { "0": { "name": "punctuation.definition.template-expression.end.loop" } },
+          "patterns": [
+            { "include": "#string" },
+            { "include": "#angka" },
+            { "include": "#boolean" },
+            { "include": "#builtin-fungsi" },
+            { "include": "#fungsi-panggil" },
+            { "include": "#operator" },
+            { "include": "#variabel" }
+          ]
+        },
+        {
+          "name": "constant.character.escape.loop",
+          "match": "\\\\(n|t|r|\"|\\\\|0|x[0-9A-Fa-f]{2})"
+        },
+        {
+          "name": "invalid.illegal.escape.loop",
+          "match": "\\\\."
+        }
+      ]
+    },
+    "boolean": {
+      "name": "constant.language.boolean.loop",
+      "match": "\\b(benar|salah)\\b"
+    },
+    "nihil": {
+      "name": "constant.language.null.loop",
+      "match": "\\b(nihil)\\b"
+    },
+    "angka": {
+      "patterns": [
+        { "name": "constant.numeric.float.loop",   "match": "\\b\\d+\\.\\d+([eE][+-]?\\d+)?\\b" },
+        { "name": "constant.numeric.hex.loop",     "match": "\\b0[xX][0-9A-Fa-f]+\\b" },
+        { "name": "constant.numeric.integer.loop", "match": "\\b\\d+\\b" }
+      ]
+    },
+    "kata-kunci-kontrol": {
+      "patterns": [
+        { "name": "keyword.control.conditional.loop", "match": "\\b(jika|maka|selain|kalau|atauNihil)\\b" },
+        { "name": "keyword.control.loop.loop",        "match": "\\b(selama|ulang|untuk|setiap|di|dalam|hentikan|lewati|lanjut)\\b" },
+        { "name": "keyword.control.flow.loop",        "match": "\\b(kembali|kembalikan)\\b" },
+        { "name": "keyword.control.exception.loop",   "match": "\\b(coba|tangkap|akhirnya|lempar|error)\\b" },
+        { "name": "keyword.control.switch.loop",      "match": "\\b(pilih|kasus)\\b" },
+        { "name": "keyword.control.end.loop",         "match": "\\b(akhir)\\b" },
+        { "name": "keyword.control.import.loop",      "match": "\\b(impor)\\b" }
+      ]
+    },
+    "kata-kunci-deklarasi": {
+      "patterns": [
+        { "name": "keyword.declaration.function.loop", "match": "\\b(fungsi)\\b" },
+        { "name": "keyword.declaration.var.loop",      "match": "\\b(milik)\\b" }
+      ]
+    },
+    "kata-kunci-tipe": {
+      "patterns": [
+        { "name": "storage.type.numeric.loop",  "match": "\\b(angka)\\b(?=\\s+[a-zA-Z_])" },
+        { "name": "storage.type.string.loop",   "match": "\\b(teks)\\b(?=\\s+[a-zA-Z_])" },
+        { "name": "storage.type.boolean.loop",  "match": "\\b(bool)\\b(?=\\s+[a-zA-Z_])" },
+        { "name": "storage.type.array.loop",    "match": "\\b(larik)\\b(?=\\s+[a-zA-Z_])" }
+      ]
+    },
+    "builtin-fungsi": {
+      "patterns": [
+        {
+          "name": "support.function.io.loop",
+          "match": "\\b(cetak|cetakTanpaBaris|masukan|bacaFile|tulisFile|bacaFileTeks|tulisFileTeks|tambahFileTeks|appendFile|jalankan|tulis|tulisInline|tulisStderr|tulisError|barisBaru|waktumilisdetik|waktuSekarang|waktuISO|tidur)\\b"
+        },
+        {
+          "name": "support.function.string.loop",
+          "match": "\\b(angkaTeks|teksAngka|keAngka|keDesimal|keTeks|panjang|karakter|kodeKarakter|dariKode|potong|cariTeks|gantiTeks|ganti|hurufBesar|hurufKecil|naik|turunkan|pisah|gabungTeks|trimTeks|trim|tambah|gabung|mulaiDengan|akhiriDengan|regexGanti|regexCocok|terakhirIndexDari)\\b"
+        },
+        {
+          "name": "support.function.array.loop",
+          "match": "\\b(urut|balik|dorong|hapusTerakhir|hapusKunci|irisLarik|iris|adaDalam|saring|peta|kurangi|jenisNilai|kunciObjek|salin|hapusLarik)\\b"
+        },
+        {
+          "name": "support.function.math.loop",
+          "match": "\\b(jumlah|bulatkan|bulatkan|lantai|langit|absolut|acakAngka|log|kosinus|sinus|akarKuadrat|PI)\\b"
+        },
+        {
+          "name": "support.function.bitwise.loop",
+          "match": "\\b(bitAND|bitOR|bitXOR|bitKiri|bitKanan|bitNOT)\\b"
+        },
+        {
+          "name": "support.function.meta.loop",
+          "match": "\\b(tipe|jenisNilai|syscall|syscallStr|_sistemEnvGet|_sistemEnvSet|_sistemEnvHapus|_sistemEnvSemua|_sistemArgumen|_sistemDirKerja|_sistemPindahDir|_sistemPathSep|_sistemNamaOS|_sistemArsitektur|_sistemJumlahCPU|_sistemPID|_sistemKeluar|_sistemJalankan)\\b"
+        }
+      ]
+    },
+
+    "lib-crypto": {
+      "name": "support.function.crypto.loop",
+      "match": "\\b(sha1|sha256|sha|hmacSha1|hmacSha256|hashSama|buatKunci|buatKunciGanda|buatKunciLarik|adalahPrima|primaSesudah|enkripsi|dekripsi|xorKunci|nilaiAman|nilaiAmanTeks|hexNilaiAman|keHex|xorTeks|hashSederhana|buatToken|base64Enkode|base64Dekode|caesarEnkode|caesarDekode|vigenereEnkode|vigenereDekode|rot13|atbash|rentangkanKunci|turunkanKunci|buatMAC|verifikasiMAC|tandaTangan|verifikasiTanda|tambahPadding|hapusPadding|enkripsiBlok|dekripsiBlok|samaCT|buatSalt|hashPassword|verifikasiPassword|base64UrlEnkode|base64UrlDekode|prima|acakFungsi|ganda|tenun|_crypto_sha1|_crypto_sha256|_crypto_hmac_sha1|_crypto_hmac_sha256|_crypto_prima|_crypto_is_prima|_crypto_next_prima|_crypto_acak_enkripsi|_crypto_acak_dekripsi|_crypto_xor|_crypto_ganda_int|_crypto_ganda_str|_crypto_ganda_hex)\\b"
+    },
+
+    "lib-net": {
+      "name": "support.function.networking.loop",
+      "match": "\\b(httpGet|httpPost|httpPostJSON|httpPostForm|httpStatus|httpOK|httpGetFull|httpPostFull|httpPut|httpDelete|httpPatch|httpHead|httpIkutiRedirect|httpUnduh|httpUpload|httpGetRetry|httpGetSafe|resBody|resStatus|resContentType|resPanjang|resOK|resRedirect|resError|resJSON|dnsResolve|tcpKonek|tcpKirim|tcpTerima|tcpTerimaSemuanya|tcpTutup|tcpHTTP|portTerbuka|scanPort|pingHost|scrapTag|scrapLink|scrapTeks|scrapHref|scrapGambar|scrapJudul|scrapMeta|scrapScript|scrapStyle|scrapParagraf|hapusTag|ambilLink|ambilTag|ambilJudul|ambilParagraf|crawlURL|parseURL|skemaDari|domainDari|portDari|pathDari|queryDari|adalahHTTPS|adalahURL|normalisasiURL|urlEnkode|urlDekode|parseQuery|buatQueryString|urlDenganQuery|urlGabung|headerBearer|headerBasic|headerJSON|headerForm|headerTeks|buatRequest|parseCookie|buatHeaderCookie|buatJSON|jsonAmbil|setRateLimit|cekRateLimit|resetRateLimit|sambung|kirim|terima|tutup|ambil|telusuri|tlsSambung)\\b"
+    },
+
+    "lib-os": {
+      "name": "support.function.os.loop",
+      "match": "\\b(getEnv|getEnvAtau|envAda|setEnv|hapusEnv|semuaEnv|argumen|argN|parseArg|dirKerja|pindahDir|dirHome|dirTemp|gabungPath|namaFile|dirDari|ekstensiFile|namaOS|arsitektur|jumlahCPU|pathSep|newline|pidSekarang|keluar|jalankanPerintah|stdout|perintahBerhasil|waktuUnix|hostname)\\b"
+    },
+
+    "lib-format": {
+      "name": "support.function.format.loop",
+      "match": "\\b(warna|warnaLatar|tebal|miring|garisBawah|redup|balik|gayaTeks|hapusANSI|terminalBerwarna|padKiri|padKanan|tengah|tabel|progressBar|progressBarLabel|garis|seksi|box|formatAngka|formatDurasi|formatByte|spinnerFrame|tulisInplace|WARNA|BG)\\b"
+    },
+
+    "lib-log": {
+      "name": "support.function.log.loop",
+      "match": "\\b(setLevelLog|setLogFile|hapusLogFile|logTampilWaktu|logTampilWarna|logSetPrefix|logModeJSON|logDebug|logInfo|logWarn|logError|logWaktu|logGrup|logMentah|logBacaTerakhir|logReset|LOG_DEBUG|LOG_INFO|LOG_WARN|LOG_ERROR|LOG_SILENT)\\b"
+    },
+
+    "lib-json": {
+      "name": "support.function.json.loop",
+      "match": "\\b(jsonParse|jsonStringify|jsonAmbilNested|jsonSet|jsonKunci|jsonValid|jsonPretty|jsonMerge)\\b"
+    },
+
+    "lib-struktur": {
+      "name": "support.function.struktur.loop",
+      "match": "\\b(tumpukBuat|tumpukDorong|tumpukAmbil|tumpukPeek|tumpukKosong|tumpukUkuran|tumpukBersihkan|antrianBuat|antrianMasuk|antrianKeluar|antrianPeek|antrianKosong|antrianUkuran|antrianBersihkan|setBuat|setTambah|setHapus|setAda|setKeLarik|setUkuran|setIrisan|setGabungan|setSelisih|setSama|mapBuat|mapSet|mapAmbil|mapHapus|mapKunci|mapNilai|mapAda|mapUkuran|mapEntri|mapKeObjek)\\b"
+    },
+
+    "lib-larik": {
+      "name": "support.function.larik.loop",
+      "match": "\\b(rentang|rentangLangkah|isi|kosong|pertama|terakhir|ada|indeks|hitung|salinLarik|balikLarik|iriskan|gabungLarik|ratakan|unik|potongLarik|lewatiLarik|urutNaik|urutTurun|pecah|zip|acakSampel|acakKocok|acakKocokSalin)\\b"
+    },
+
+    "lib-teksutil": {
+      "name": "support.function.teksutil.loop",
+      "match": "\\b(diawali|diakhiri|mengandung|adalahAngka|adalahHuruf|adalahSpasi|balikTeks|ulang|padTengah|ambilKiri|ambilKanan|ambilTengah|karakterKe|indeksKarakter|pisahKarakter|bungkus|kutip|kurung|kurungKotak|formatAngka0|ribuan)\\b"
+    },
+
+    "lib-matika": {
+      "name": "support.function.matika.loop",
+      "match": "\\b(kuadrat|kubik|pangkat|modulo|tandaAngka|bulatBawah|bulatAtas|bulatDekat|bulatDesimal|jepitkan|dalamRentang|adaFaktor|fpb|kpk|faktorial|fibonacci|jumlahLarik|rerata|variansi|stdDeviasi|maksLarik|minLarik|TAK_HINGGA)\\b"
+    },
+
+    "lib-acak": {
+      "name": "support.function.acak.loop",
+      "match": "\\b(acakSeed|acakBulat|acakDesimal|acakPilih|acakBoolean|acakBooleanP|acakNormal|acakBerbobot|acakUUID)\\b"
+    },
+
+    "lib-waktu": {
+      "name": "support.function.waktu.loop",
+      "match": "\\b(detikSekarang|ukurMulai|ukurSelesai|detikKeMenit|detikKeJam|menitKeDetik|jamKeDetik|hariKeDetik|formatDetik|tundaBusy)\\b"
+    },
+
+    "lib-berkas": {
+      "name": "support.function.berkas.loop",
+      "match": "\\b(bacaTeks|bacaBaris|bacaCSV|adaBerkas|tulisTeks|tulisBaris|tulisCSV|tambahTeks|tambahBaris|namaFileDari|ekstensi|tanpaEkstensi|dirPath|gabungPathStr)\\b"
+    },
+
+    "lib-pinout": {
+      "name": "support.function.pinout.loop",
+      "match": "\\b(tulisAngka|tulisAngkaInline|keluarkan|keluarkanInline|tulisLarik|tulisLarikSatu|baca|tanya|tanyaAngka|formatPasang|cetak|judulKotak|panik|debug|STDIN|STDOUT|STDERR)\\b"
+    },
+
+    "fungsi-deklarasi": {
+      "match": "\\b(fungsi)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*\\(",
+      "captures": {
+        "1": { "name": "keyword.declaration.function.loop" },
+        "2": { "name": "entity.name.function.definition.loop" }
+      }
+    },
+    "fungsi-panggil": {
+      "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
+      "captures": {
+        "1": { "name": "entity.name.function.call.loop" }
+      }
+    },
+    "operator": {
+      "patterns": [
+        { "name": "keyword.operator.logical.loop",            "match": "\\b(dan|atau|tidak)\\b" },
+        { "name": "keyword.operator.pipe.loop",               "match": "\\|>" },
+        { "name": "keyword.operator.arrow.loop",              "match": "->" },
+        { "name": "keyword.operator.comparison.loop",         "match": "(==|!=|<=|>=|<|>)" },
+        { "name": "keyword.operator.assignment.compound.loop","match": "(\\+=|-=|\\*=|/=|%=)" },
+        { "name": "keyword.operator.assignment.loop",         "match": "(?<![=!<>+\\-*/%])=(?!=)" },
+        { "name": "keyword.operator.arithmetic.loop",         "match": "[+\\-*/%]" },
+        { "name": "punctuation.separator.loop",               "match": "," },
+        { "name": "punctuation.terminator.loop",              "match": ";" }
+      ]
+    },
+    "variabel": {
+      "name": "variable.other.loop",
+      "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b"
+    }
+  }
+}

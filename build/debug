@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# Loop Language - Build Debug Script
+# loop-lang v1.2.0 | build/debug
+#
+# Jalankan skrip ini untuk build extension dalam mode debug:
+#   - Kompilasi TypeScript dengan source maps
+#   - Watch mode (--watch) untuk hot reload
+#   - Output ke out/ dengan full diagnostics
+#
+# Penggunaan:
+#   chmod +x build/debug
+#   ./build/debug [--watch]
+
+set -euo pipefail
+
+WATCH=false
+for arg in "$@"; do
+  [[ "$arg" == "--watch" ]] && WATCH=true
+done
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT"
+
+echo "Loop Lang - Debug Build v1.2.0"
+echo "  Root: $ROOT"
+echo ""
+
+# Pastikan deps terinstall
+if [ ! -d node_modules ]; then
+  echo "Installing dependencies..."
+  npm install --silent
+fi
+
+# Compile TypeScript
+if $WATCH; then
+  echo "Watch mode aktif. Tekan Ctrl+C untuk berhenti."
+  npx tsc -p tsconfig.json --watch --sourceMap true
+else
+  echo "Compiling TypeScript..."
+  npx tsc -p tsconfig.json --sourceMap true
+  echo "Build debug selesai -> out/"
+  echo ""
+  echo "File output:"
+  find out/ -name "*.js" -o -name "*.map" | sort | sed 's/^/  /'
+fi

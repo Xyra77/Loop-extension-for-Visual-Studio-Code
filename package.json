@@ -1,0 +1,166 @@
+{
+  "name": "loop-lang",
+  "displayName": "Loop Language",
+  "description": "Loop language support for VS Code - syntax highlighting, run, compile, documentation",
+  "version": "1.4.0",
+  "publisher": "LoopLang",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "icon": "icon.png",
+  "keywords": [
+    "loop",
+    "lp",
+    "bahasa indonesia",
+    "loop-lang",
+    "kriptografi",
+    "networking",
+    "json",
+    "format",
+    "logging"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Xyra77/Loop-extension-for-Visual-Studio-Code.git"
+  },
+  "activationEvents": [
+    "onLanguage:loop"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "loop",
+        "aliases": [
+          "Loop",
+          "loop"
+        ],
+        "extensions": [
+          ".lp"
+        ],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./icon.png",
+          "dark": "./icon.png"
+        }
+      }
+    ],
+    "grammars": [
+      {
+        "language": "loop",
+        "scopeName": "source.loop",
+        "path": "./syntaxes/loop.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "loop",
+        "path": "./snippets/loop.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "loop.runFile",
+        "title": "Run File",
+        "category": "Loop",
+        "icon": "$(play)"
+      },
+      {
+        "command": "loop.compileFile",
+        "title": "Compile to NASM",
+        "category": "Loop",
+        "icon": "$(tools)"
+      },
+      {
+        "command": "loop.debugFile",
+        "title": "Debug File",
+        "category": "Loop",
+        "icon": "$(debug)"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "loop.runFile",
+        "key": "ctrl+f5",
+        "mac": "cmd+f5",
+        "when": "editorLangId == loop"
+      },
+      {
+        "command": "loop.compileFile",
+        "key": "ctrl+shift+b",
+        "mac": "cmd+shift+b",
+        "when": "editorLangId == loop"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "loop.runFile",
+          "when": "editorLangId == loop",
+          "group": "navigation@1"
+        },
+        {
+          "command": "loop.compileFile",
+          "when": "editorLangId == loop",
+          "group": "navigation@2"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "loop.runFile",
+          "when": "editorLangId == loop",
+          "group": "1_run@1"
+        },
+        {
+          "command": "loop.compileFile",
+          "when": "editorLangId == loop",
+          "group": "1_run@2"
+        },
+        {
+          "command": "loop.debugFile",
+          "when": "editorLangId == loop",
+          "group": "1_run@3"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Loop Language",
+      "properties": {
+        "loop.interpreterPath": {
+          "type": "string",
+          "default": "loop",
+          "description": "Path ke interpreter/compiler Loop. Default: 'loop' (harus ada di PATH)."
+        },
+        "loop.eksperimen.aktifkan": {
+          "type": "boolean",
+          "default": false,
+          "description": "Aktifkan fitur eksperimen Loop (inlay hints, semantic tokens, LSP dasar). Experimental feature."
+        },
+        "loop.build.outputDir": {
+          "type": "string",
+          "default": "build",
+          "description": "Direktori output hasil kompilasi NASM relatif terhadap root workspace."
+        }
+      }
+    },
+    "themes": []
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "build:debug": "bash build/debug",
+    "build:watch": "bash build/debug --watch",
+    "package": "node build/internal.js",
+    "package:bump": "node build/internal.js --bump patch"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.75.0",
+    "@types/node": "^18.0.0",
+    "typescript": "^5.0.0",
+    "@vscode/vsce": "^2.0.0"
+  }
+}
